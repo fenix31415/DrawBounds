@@ -121,6 +121,12 @@ private:
 		//auto player_pos = player->GetPosition();
 		//auto player_bounds = player->GetBaseObject();
 		draw_bounds(get_refr_bounds(player), 0.0f);
+		RE::TES::GetSingleton()->ForEachReference([](RE::TESObjectREFR& refr) {
+			if (!refr.IsDisabled() && refr.GetBaseObject() && refr.GetBaseObject()->formID == 0x17) {
+				draw_bounds(get_refr_bounds(&refr), 0.0f);
+			}
+			return RE::BSContainer::ForEachResult::kContinue;
+		});
 
 		DebugAPI_IMPL::DebugAPI::Update();
 	}
